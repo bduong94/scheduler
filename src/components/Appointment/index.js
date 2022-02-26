@@ -16,7 +16,6 @@ export default function Appointment(props) {
       ) : (
         <Empty />
       )}
-      {props.time ? `Appointment at ${props.time}` : "No Appointments"}
     </article>
   );
 }
