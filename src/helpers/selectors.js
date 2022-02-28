@@ -11,8 +11,21 @@ export function getAppointmentsForDay(state, day) {
   const appointmentsInformationArray = [];
 
   for (const appointmentID of appointmentsForDayArray) {
-    appointmentsInformationArray.push(state.appointments[appointmentID]);
+    if (state.appointments[appointmentID]) {
+      appointmentsInformationArray.push(state.appointments[appointmentID]);
+    }
   }
 
   return appointmentsInformationArray;
+}
+
+export function getInterview(state, interview) {
+  const interviewCopy = interview;
+  if (interview) {
+    interviewCopy.interviewer = state.interviewers[interview.interviewer];
+    delete interviewCopy.interview;
+    return interviewCopy;
+  } else {
+    return null;
+  }
 }
