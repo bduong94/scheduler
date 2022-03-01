@@ -46,16 +46,12 @@ import { getAppointmentsForDay } from "helpers/selectors";
 // };
 
 export default function Application(props) {
-  // const [day, setDay] = useState("Monday");
-  // const [days, setDays] = useState([]);
-
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {},
   });
-  // const dailyAppointments = [];
   const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const setDay = (day) => setState({ ...state, day });
@@ -65,10 +61,6 @@ export default function Application(props) {
   const setInterviewers = (interviewers) =>
     setState((prev) => ({ ...prev, interviewers }));
   const appointmentsArray = dailyAppointments.map((appointment) => {
-    // const interview = getInterview(state, appointment.interview);
-
-    // return <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={interview} />;
-
     return <Appointment key={appointment.id} {...appointment} />;
   });
 
