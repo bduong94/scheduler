@@ -23,8 +23,6 @@ export default function Application(props) {
   const setDays = (days) => setState((prev) => ({ ...prev, days }));
   const setAppointments = (appointments) =>
     setState((prev) => ({ ...prev, appointments }));
-  // const setInterviewers = (interviewers) =>
-  //   setState({ ...state, interviewers });
   const setInterviewers = (interviewers) =>
     setState((prev) => ({ ...prev, interviewers }));
 
@@ -42,6 +40,7 @@ export default function Application(props) {
     );
   });
 
+  console.log("Hello", appointmentsArray);
   useEffect(() => {
     const daysURL = "/api/days";
     const appointmentsURL = "/api/appointments";
@@ -56,6 +55,10 @@ export default function Application(props) {
       setInterviewers(all[2].data);
     });
   }, []);
+
+  useEffect(() => {
+    console.log(dailyAppointments);
+  }, [dailyAppointments]);
 
   return (
     <main className="layout">

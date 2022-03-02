@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./styles.scss";
 import Header from "./Header";
 import Show from "./Show";
@@ -14,6 +14,17 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
+  useEffect(() => {
+    if (mode === EMPTY && props.interview) {
+      transition(SHOW);
+    }
+
+    if (mode === SHOW && !props.interview) {
+      transition(EMPTY);
+    }
+  }, [props.interview, transition, mode]);
+
+  console.log("Current Mode:", mode);
   return (
     <article className="appointment">
       <Header time={props.time} />

@@ -3,7 +3,7 @@ export function getAppointmentsForDay(state, day) {
     (dayFromState) => dayFromState.name === day
   );
 
-  if (state.days.length < 1 || dayInformation < 1) {
+  if (state.days.length < 1 || dayInformation.length < 1) {
     return [];
   }
 
@@ -41,9 +41,8 @@ export function getInterviewersForDay(state, day) {
 }
 
 export function getInterview(state, interview) {
-  const interviewCopy = {};
+  const interviewCopy = { ...interview };
   if (interview && Object.keys(state.interviewers).length !== 0) {
-    interviewCopy.student = interview.student;
     interviewCopy.interviewer = state.interviewers[interview.interviewer];
     return interviewCopy;
   } else {
