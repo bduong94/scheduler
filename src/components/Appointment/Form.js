@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import InterviewerList from "components/InterviewerList";
 import Button from "components/Button";
 
@@ -15,6 +15,7 @@ export default function Form(props) {
     reset();
     props.onCancel();
   };
+
   return (
     <main
       className="appointment__card appointment__card--create"
@@ -42,7 +43,7 @@ export default function Form(props) {
           <Button danger onClick={cancel}>
             Cancel
           </Button>
-          <Button confirm onClick={props.onSave}>
+          <Button confirm onClick={() => props.onSave(student, interviewer)}>
             Save
           </Button>
         </section>

@@ -19,6 +19,22 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const interviewersForDay = getInterviewersForDay(state, state.day);
 
+  const bookInterview = (id, interview) => {
+    const urlUpdate = `/api/appointments/${id}`;
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview },
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    axios.put(urlUpdate, appointment).then((res) => console.log(res));
+    setState({ ...state, appointments });
+  };
+
   const setDay = (day) => setState({ ...state, day });
   const setDays = (days) => setState((prev) => ({ ...prev, days }));
   const setAppointments = (appointments) =>
@@ -36,11 +52,11 @@ export default function Application(props) {
         time={appointment.time}
         interview={interview}
         interviewers={interviewersForDay}
+        bookInterview={bookInterview}
       />
     );
   });
 
-  console.log("Hello", appointmentsArray);
   useEffect(() => {
     const daysURL = "/api/days";
     const appointmentsURL = "/api/appointments";
@@ -55,10 +71,6 @@ export default function Application(props) {
       setInterviewers(all[2].data);
     });
   }, []);
-
-  useEffect(() => {
-    console.log(dailyAppointments);
-  }, [dailyAppointments]);
 
   return (
     <main className="layout">
