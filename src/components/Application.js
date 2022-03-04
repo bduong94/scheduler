@@ -35,6 +35,22 @@ export default function Application(props) {
     setState({ ...state, appointments });
   };
 
+  const cancelInterview = (id) => {
+    const urlUpdate = `/api/appointments/${id}`;
+
+    const appointment = {
+      ...state.appointments[id],
+      interview: null,
+    };
+
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment,
+    };
+    Promise.all([axios.delete(urlUpdate)]).then((all) => console.log(all[0]));
+    setState({ ...state, appointments });
+  };
+
   const setDay = (day) => setState({ ...state, day });
   const setDays = (days) => setState((prev) => ({ ...prev, days }));
   const setAppointments = (appointments) =>
@@ -53,6 +69,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewersForDay}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
