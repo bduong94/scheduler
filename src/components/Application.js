@@ -31,7 +31,12 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
-    axios.put(urlUpdate, appointment).then((res) => console.log(res));
+    Promise.all([axios.put(urlUpdate, appointment)])
+      .then((all) => console.log(all[0]))
+      .catch((err) => {
+        console.log(err);
+        return typeof err;
+      });
     setState({ ...state, appointments });
   };
 
@@ -47,7 +52,12 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
-    Promise.all([axios.delete(urlUpdate)]).then((all) => console.log(all[0]));
+    Promise.all([axios.delete(urlUpdate)])
+      .then((all) => console.log(all[0]))
+      .catch((err) => {
+        console.log(err);
+        return typeof err;
+      });
     setState({ ...state, appointments });
   };
 
