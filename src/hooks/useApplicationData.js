@@ -16,6 +16,37 @@ export default function useApplicationData() {
   const setInterviewers = (interviewers) =>
     setState((prev) => ({ ...prev, interviewers }));
 
+  const updateSpots = (appointments) => {
+    const days = [...state.days];
+    const dayInformation = days.filter((day) => day.name === state.day);
+    const dayAppointments = dayInformation[0].appointments;
+    let counter = 0;
+
+    for (const appointmentID of dayAppointments) {
+      if (appointments[appointmentID].interview === null) {
+        counter++;
+      }
+    }
+
+    dayInformation[0].spots = counter;
+    console.log(dayInformation);
+
+    for (let i = 0; i < days.length; i++) {
+      if (dayInformation[0].name === days[i].name) {
+        days[i] = dayInformation[0];
+      }
+    }
+
+    return days;
+    /* 
+    Gets appointments from function
+    Get day information
+    Get list of appointments
+    Loop for number of null values for interview property
+    Set day information for spots
+    */
+  };
+
   const bookInterview = (id, interview) => {
     const urlUpdate = `/api/appointments/${id}`;
     const appointment = {
@@ -28,9 +59,10 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    return Promise.all([axios.put(urlUpdate, appointment)]).then(() =>
-      setState({ ...state, appointments })
-    );
+    return Promise.all([axios.put(urlUpdate, appointment)]).then(() => {
+      setState({ ...state, appointments });
+      setDays(updateSpots(appointments));
+    });
   };
 
   const cancelInterview = (id) => {
@@ -46,9 +78,11 @@ export default function useApplicationData() {
       [id]: appointment,
     };
 
-    return Promise.all([axios.delete(urlUpdate)]).then(() =>
-      setState({ ...state, appointments })
-    );
+    return Promise.all([axios.delete(urlUpdate)]).then(() => {
+      setState({ ...state, appointments });
+      setDays(updateSpots(appointments));
+    });
+    // .then(() => setDays(updateSpots(appointments)));
   };
 
   useEffect(() => {
