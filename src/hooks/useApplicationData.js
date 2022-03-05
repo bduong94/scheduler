@@ -29,7 +29,6 @@ export default function useApplicationData() {
     }
 
     dayInformation[0].spots = counter;
-    console.log(dayInformation);
 
     for (let i = 0; i < days.length; i++) {
       if (dayInformation[0].name === days[i].name) {
@@ -38,13 +37,6 @@ export default function useApplicationData() {
     }
 
     return days;
-    /* 
-    Gets appointments from function
-    Get day information
-    Get list of appointments
-    Loop for number of null values for interview property
-    Set day information for spots
-    */
   };
 
   const bookInterview = (id, interview) => {
@@ -82,7 +74,6 @@ export default function useApplicationData() {
       setState({ ...state, appointments });
       setDays(updateSpots(appointments));
     });
-    // .then(() => setDays(updateSpots(appointments)));
   };
 
   useEffect(() => {

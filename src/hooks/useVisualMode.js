@@ -6,6 +6,7 @@ export default function useVisualMode(initial) {
 
   function transition(nextMode, replace = false) {
     const historyCopy = [...history];
+
     if (replace) {
       historyCopy.pop();
       historyCopy.push(nextMode);
