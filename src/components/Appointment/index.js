@@ -19,6 +19,7 @@ export default function Appointment(props) {
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
+  const ERROR_INVALID = "ERROR_INVALID";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -34,16 +35,20 @@ export default function Appointment(props) {
     }
   }, [props.interview, transition, mode]);
 
-  const save = (name, interviewer) => {
+  const save = (name, interviewer = null) => {
     const interview = {
       student: name,
       interviewer,
     };
     transition(SAVING);
-    props
-      .bookInterview(props.id, interview)
-      .then(() => transition(SHOW))
-      .catch((error) => transition(ERROR_SAVE, true));
+    if (!interviewer || name === "") {
+      setTimeout(() => transition(ERROR_INVALID, true), 1000);
+    } else {
+      props
+        .bookInterview(props.id, interview)
+        .then(() => transition(SHOW))
+        .catch((error) => transition(ERROR_SAVE, true));
+    }
   };
 
   const removeInterview = () => {
@@ -100,6 +105,12 @@ export default function Appointment(props) {
       {mode === ERROR_DELETE && (
         <Error
           message="Could not cancel the appointment."
+          onClose={() => back()}
+        />
+      )}
+      {mode === ERROR_INVALID && (
+        <Error
+          message="Information invalid please try again"
           onClose={() => back()}
         />
       )}
