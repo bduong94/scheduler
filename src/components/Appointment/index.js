@@ -40,18 +40,18 @@ export default function Appointment(props) {
       interviewer,
     };
     transition(SAVING);
-    if (props.bookInterview(props.id, interview)) {
-      transition(ERROR_SAVE);
-    } else {
-      props.bookInterview(props.id, interview);
-      setTimeout(() => transition(SHOW), 1000);
-    }
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((error) => transition(ERROR_SAVE, true));
   };
 
   const removeInterview = () => {
-    transition(DELETING);
-    props.cancelInterview(props.id);
-    setTimeout(() => transition(EMPTY), 1000);
+    transition(DELETING, true);
+    props
+      .cancelInterview(props.id)
+      .then(() => setTimeout(() => transition(EMPTY), 1000))
+      .catch((error) => transition(ERROR_DELETE, true));
   };
 
   return (
@@ -92,7 +92,16 @@ export default function Appointment(props) {
         />
       )}
       {mode === ERROR_SAVE && (
-        <Error message="Could not save the appointment." />
+        <Error
+          message="Could not save the appointment."
+          onClose={() => back()}
+        />
+      )}
+      {mode === ERROR_DELETE && (
+        <Error
+          message="Could not cancel the appointment."
+          onClose={() => back()}
+        />
       )}
     </article>
   );

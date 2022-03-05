@@ -21,7 +21,6 @@ export default function Application(props) {
 
   const bookInterview = (id, interview) => {
     const urlUpdate = `/api/appointments/${id}`;
-
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview },
@@ -31,13 +30,10 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
-    Promise.all([axios.put(urlUpdate, appointment)])
-      .then((all) => console.log(all[0]))
-      .catch((err) => {
-        console.log(err);
-        return typeof err;
-      });
-    setState({ ...state, appointments });
+
+    return Promise.all([axios.put(urlUpdate, appointment)]).then(() =>
+      setState({ ...state, appointments })
+    );
   };
 
   const cancelInterview = (id) => {
@@ -52,13 +48,10 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment,
     };
-    Promise.all([axios.delete(urlUpdate)])
-      .then((all) => console.log(all[0]))
-      .catch((err) => {
-        console.log(err);
-        return typeof err;
-      });
-    setState({ ...state, appointments });
+
+    return Promise.all([axios.delete(urlUpdate)]).then(() =>
+      setState({ ...state, appointments })
+    );
   };
 
   const setDay = (day) => setState({ ...state, day });
