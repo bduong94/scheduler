@@ -27,3 +27,7 @@ npm test
 ```sh
 npm run storybook
 ```
+
+## Image of Application
+
+![Image of Web Application](https://github.com/bduong94/scheduler/blob/master/public/images/interview_slots.PNG?raw=true)
