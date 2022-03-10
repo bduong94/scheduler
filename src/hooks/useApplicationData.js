@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+  //API States
   const [state, setState] = useState({
     day: "Monday",
     days: [],
@@ -9,6 +10,7 @@ export default function useApplicationData() {
     interviewers: {},
   });
 
+  //Helper setter functions
   const setDay = (day) => setState({ ...state, day });
   const setDays = (days) => setState((prev) => ({ ...prev, days }));
   const setAppointments = (appointments) =>
@@ -16,6 +18,22 @@ export default function useApplicationData() {
   const setInterviewers = (interviewers) =>
     setState((prev) => ({ ...prev, interviewers }));
 
+  useEffect(() => {
+    const daysURL = "/api/days";
+    const appointmentsURL = "/api/appointments";
+    const interviewersURL = "/api/interviewers";
+    Promise.all([
+      axios.get(daysURL),
+      axios.get(appointmentsURL),
+      axios.get(interviewersURL),
+    ]).then((all) => {
+      setDays(all[0].data);
+      setAppointments(all[1].data);
+      setInterviewers(all[2].data);
+    });
+  }, []);
+
+  //Function to update sidebar spots
   const updateSpots = (appointments) => {
     const days = [...state.days];
     const dayInformation = days.filter((day) => day.name === state.day);
@@ -39,6 +57,7 @@ export default function useApplicationData() {
     return days;
   };
 
+  //Interview booking function
   const bookInterview = (id, interview) => {
     const urlUpdate = `/api/appointments/${id}`;
     const appointment = {
@@ -57,6 +76,7 @@ export default function useApplicationData() {
     });
   };
 
+  //Cancel Interview functions
   const cancelInterview = (id) => {
     const urlUpdate = `/api/appointments/${id}`;
 
@@ -75,21 +95,6 @@ export default function useApplicationData() {
       setDays(updateSpots(appointments));
     });
   };
-
-  useEffect(() => {
-    const daysURL = "/api/days";
-    const appointmentsURL = "/api/appointments";
-    const interviewersURL = "/api/interviewers";
-    Promise.all([
-      axios.get(daysURL),
-      axios.get(appointmentsURL),
-      axios.get(interviewersURL),
-    ]).then((all) => {
-      setDays(all[0].data);
-      setAppointments(all[1].data);
-      setInterviewers(all[2].data);
-    });
-  }, []);
 
   return { state, setDay, bookInterview, cancelInterview };
 }
