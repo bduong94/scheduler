@@ -47,7 +47,7 @@ Canceling and saving an appointment edit:
 Deleting an appointment slot:
 ![Deleting an appointment slot](https://github.com/bduong94/scheduler/blob/master/public/images/deletingAppointments.gif?raw=true)
 
-## Dev Depencies
+## Dev Dependencies
 
 - Babel
 - React
