@@ -43,14 +43,14 @@ export default function Appointment(props) {
     };
     transition(SAVING);
     if (!interviewer) {
-      setTimeout(() => transition(ERROR_NOINTERVIEWER, true), 1000);
+      setTimeout(() => transition(ERROR_NOINTERVIEWER), 1000);
     } else if (name === "") {
-      setTimeout(() => transition(ERROR_NONAME, true), 1000);
+      setTimeout(() => transition(ERROR_NONAME), 1000);
     } else {
       props
         .bookInterview(props.id, interview)
         .then(() => transition(SHOW))
-        .catch((error) => transition(ERROR_SAVE, true));
+        .catch((error) => transition(ERROR_SAVE));
     }
   };
 
