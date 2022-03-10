@@ -19,7 +19,8 @@ export default function Appointment(props) {
   const EDIT = "EDIT";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
-  const ERROR_INVALID = "ERROR_INVALID";
+  const ERROR_NOINTERVIEWER = "ERROR_NOINTERVIEWER";
+  const ERROR_NONAME = "ERROR_NONAME";
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
@@ -41,8 +42,10 @@ export default function Appointment(props) {
       interviewer,
     };
     transition(SAVING);
-    if (!interviewer || name === "") {
-      setTimeout(() => transition(ERROR_INVALID, true), 1000);
+    if (!interviewer) {
+      setTimeout(() => transition(ERROR_NOINTERVIEWER, true), 1000);
+    } else if (name === "") {
+      setTimeout(() => transition(ERROR_NONAME, true), 1000);
     } else {
       props
         .bookInterview(props.id, interview)
@@ -108,9 +111,16 @@ export default function Appointment(props) {
           onClose={() => back()}
         />
       )}
-      {mode === ERROR_INVALID && (
+      {mode === ERROR_NOINTERVIEWER && (
         <Error
-          message="Information invalid please try again"
+          message="No interviewer selected. Please select an interviewer."
+          onClose={() => back()}
+        />
+      )}
+
+      {mode === ERROR_NONAME && (
+        <Error
+          message="The name cannot be blank. Please enter a name."
           onClose={() => back()}
         />
       )}
