@@ -36,15 +36,19 @@ export default function Appointment(props) {
     }
   }, [props.interview, transition, mode]);
 
+  //Function to save interview information
   const save = (name, interviewer = null) => {
     const interview = {
       student: name,
       interviewer,
     };
     transition(SAVING);
+
+    //If there is no interviewer selected
     if (!interviewer) {
       setTimeout(() => transition(ERROR_NOINTERVIEWER), 1000);
-    } else if (name === "") {
+    } //If there is no name entered
+    else if (name === "") {
       setTimeout(() => transition(ERROR_NONAME), 1000);
     } else {
       props
@@ -54,6 +58,7 @@ export default function Appointment(props) {
     }
   };
 
+  //Function to cancel an interview slot
   const removeInterview = () => {
     transition(DELETING, true);
     props

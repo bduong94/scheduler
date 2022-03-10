@@ -1,3 +1,4 @@
+//Gets the appointment information for the current day selected
 export function getAppointmentsForDay(state, day) {
   const dayInformation = state.days.filter(
     (dayFromState) => dayFromState.name === day
@@ -19,6 +20,7 @@ export function getAppointmentsForDay(state, day) {
   return appointmentsInformationArray;
 }
 
+//Gets the available interviewers for the current day selected
 export function getInterviewersForDay(state, day) {
   const dayInformation = state.days.filter(
     (dayFromState) => dayFromState.name === day
@@ -40,6 +42,7 @@ export function getInterviewersForDay(state, day) {
   return interviewersInformationArray;
 }
 
+//Gets information for interview based on the interview ID
 export function getInterview(state, interview) {
   const interviewCopy = { ...interview };
   if (interview && Object.keys(state.interviewers).length !== 0) {
