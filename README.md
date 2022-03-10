@@ -31,7 +31,20 @@ npm run storybook
 
 ## Images of Application
 
+Scheduler Front:
 ![Image of Web Application](https://github.com/bduong94/scheduler/blob/master/public/images/interview_slots.PNG?raw=true)
+
+Switching between interview days:
+![Switching between interview days](https://github.com/bduong94/scheduler/blob/master/public/images/switchingDays.gif?raw=true)
+
+Booking an Appointment:
+![Booking an Appointment](https://github.com/bduong94/scheduler/blob/master/public/images/bookingAppointment.gif?raw=true)
+
+Canceling and saving an appointment edit:
+![Canceling and saving an appointment edit](https://github.com/bduong94/scheduler/blob/master/public/images/cancelingEdit.gif?raw=true)
+
+Deleting an appointment slot:
+![Deleting an appointment slot](https://github.com/bduong94/scheduler/blob/master/public/images/deletingAppointments.gif?raw=true)
 
 ## Dev Depencies
 
