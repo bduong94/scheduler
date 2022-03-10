@@ -9,6 +9,7 @@ Users may edit their interview information or cancel the interview.
 ## Setup
 
 Install dependencies with `npm install`.
+
 Install the API to be run with this project by following instructionst here: [scheduler-api](https://github.com/lighthouse-labs/scheduler-api).
 
 ## Running Webpack Development Server
